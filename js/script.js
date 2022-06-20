@@ -1,5 +1,38 @@
 // Data Pagination & Filtering
 
+// insert a search bar. searchNames function adds student objects that match the search value into an array.
+
+const header = document.querySelector('.header');
+header.insertAdjacentHTML(
+   'beforeend',
+   `<label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button type="button" class="js-submit"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>`
+); 
+
+const search = document.querySelector('#search');
+const submit = document.querySelector('.js-submit');
+const studentList = document.querySelector('.student-list');
+
+function searchNames(searchInput) {
+   let searchResults = [];
+   for (let i = 0; i < data.length; i++) {
+      if (!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
+         studentList.innerHTML = '';
+         studentList.insertAdjacentHTML(
+            'beforeend',
+            `<span class="no-results">No results found.</span>`
+         );
+      } else if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())) {
+         searchResults.push(data[i]);
+      }
+   }
+   return searchResults;
+}
+
+
 // showPage function creates and appends elements to display a page of 9 students
 
 const perPage = 9;
@@ -7,7 +40,6 @@ const perPage = 9;
 function showPage(list, page) {
    const startIndex = ( page * perPage) - perPage;
    const endIndex = page * perPage;
-   const studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
    for (let i = 0; i < list.length; i++){
       if (i >= startIndex && i < endIndex) {
@@ -64,40 +96,18 @@ function addPagination(list) {
    });
 }
 
-const header = document.querySelector('.header');
+// event listener to show search results upon click of the search button or keyup
 
-header.insertAdjacentHTML(
-   'beforeend',
-   `<label for="search" class="student-search">
-      <span>Search by name</span>
-      <input id="search" placeholder="Search by name...">
-      <button type="button" class="js-submit"><img src="img/icn-search.svg" alt="Search icon"></button>
-   </label>`
-); 
-
-const search = document.querySelector('#search');
-const submit = document.querySelector('.js-submit');
-
-function searchNames(searchInput, names) {
-   console.log(searchInput);
-   console.log(names);
-   for (let i = 0; i < names.length; i++) {
-      if(searchInput.value.length !== 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-         console.log(names[i]);
-      }
-   }
-}
-
-
-
-submit.addEventListener('click', (e) => {
+submit.addEventListener('click', () => {
    console.log('click works');
-   searchNames(search, data);
+   showPage(searchNames(search.value), 1);
+   addPagination(searchNames(search.value));
 });
 
-search.addEventListener('keyup', (e) => {
+search.addEventListener('keyup', () => {
    console.log('keyup works');
-   searchNames(search, data);
+   showPage(searchNames(search.value), 1);
+   addPagination(searchNames(search.value));
 });
 
 // call functions starting with showPage so it loads with page 1 ready
