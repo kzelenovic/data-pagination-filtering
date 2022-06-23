@@ -1,7 +1,6 @@
 // Data Pagination & Filtering
 
-// insert a search bar. searchNames function adds student objects that match the search value into an array.
-
+// inserts a search bar to top of page.
 const header = document.querySelector('.header');
 header.insertAdjacentHTML(
    'beforeend',
@@ -16,6 +15,7 @@ const search = document.querySelector('#search');
 const submit = document.querySelector('.js-submit');
 const studentList = document.querySelector('.student-list');
 
+// searchNames function adds student objects that match the search value into an array. returns the searchResults array.
 function searchNames(searchInput) {
    let searchResults = [];
    for (let i = 0; i < data.length; i++) {
@@ -32,11 +32,9 @@ function searchNames(searchInput) {
    return searchResults;
 }
 
-
-// showPage function creates and appends elements to display a page of 9 students
-
 const perPage = 9;
 
+// showPage function creates and appends elements to display a page of 9 students
 function showPage(list, page) {
    const startIndex = ( page * perPage) - perPage;
    const endIndex = page * perPage;
@@ -60,9 +58,8 @@ function showPage(list, page) {
    }
 }
 
-/* addPagination function creates buttons at the bottom to use as navigation through the student pages
+/* addPagination function creates buttons at the bottom to use as navigation through the student pages.
 includes an event listener and setActive function to change the style of the button when clicked */
-
 function addPagination(list) {
    const numberOfPages = list.length / perPage;
    const linkList = document.querySelector('.link-list');
@@ -96,8 +93,7 @@ function addPagination(list) {
    });
 }
 
-// event listener to show search results upon click of the search button or keyup
-
+// event listeners to show search results upon click of the search button or keyup in the search bar
 submit.addEventListener('click', () => {
    console.log('click works');
    showPage(searchNames(search.value), 1);
@@ -111,6 +107,5 @@ search.addEventListener('keyup', () => {
 });
 
 // call functions starting with showPage so it loads with page 1 ready
-
 showPage(data, 1);
 addPagination(data);
