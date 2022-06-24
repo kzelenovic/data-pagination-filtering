@@ -19,7 +19,23 @@ const studentList = document.querySelector('.student-list');
 function searchNames(searchInput) {
    let searchResults = [];
    for (let i = 0; i < data.length; i++) {
-      if (!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
+
+      // my second attempt...
+/*       if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())){
+         searchResults.push(data[i]);
+      }
+
+      if(!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
+         searchResults = [];
+         studentList.innerHTML = '';
+         studentList.insertAdjacentHTML(
+            'beforeend',
+            `<span class="no-results">No results found.</span>`
+         );
+      } */
+
+      // my first attempt
+/*       if (!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
          studentList.innerHTML = '';
          studentList.insertAdjacentHTML(
             'beforeend',
@@ -27,7 +43,7 @@ function searchNames(searchInput) {
          );
       } else if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())) {
          searchResults.push(data[i]);
-      }
+      } */
    }
    return searchResults;
 }
@@ -75,7 +91,9 @@ function addPagination(list) {
    }
    
    const pageButtons = document.querySelectorAll('button');
-   pageButtons[1].className = 'active';
+   if (numberOfPages >= 1) {
+      pageButtons[1].className = 'active';
+   }
 
    function setActive(e) {
       for (let i = 0; i < pageButtons.length; i++) {
