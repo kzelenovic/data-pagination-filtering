@@ -19,32 +19,19 @@ const studentList = document.querySelector('.student-list');
 function searchNames(searchInput) {
    let searchResults = [];
    for (let i = 0; i < data.length; i++) {
-
-      // my second attempt...
-/*       if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())){
+    if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())) {
          searchResults.push(data[i]);
-      }
-
-      if(!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
-         searchResults = [];
-         studentList.innerHTML = '';
-         studentList.insertAdjacentHTML(
-            'beforeend',
-            `<span class="no-results">No results found.</span>`
-         );
-      } */
-
-      // my first attempt
-/*       if (!data[i].name.first.includes(searchInput.toLowerCase()) && !data[i].name.last.includes(searchInput.toLowerCase())){
-         studentList.innerHTML = '';
-         studentList.insertAdjacentHTML(
-            'beforeend',
-            `<span class="no-results">No results found.</span>`
-         );
-      } else if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())) {
-         searchResults.push(data[i]);
-      } */
+      } 
    }
+
+   if (searchResults.length === 0){
+      studentList.innerHTML = '';
+         studentList.insertAdjacentHTML(
+            'beforeend',
+            `<span class="no-results">No results found.</span>`
+         );
+      }
+   
    return searchResults;
 }
 
