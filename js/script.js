@@ -15,23 +15,25 @@ const search = document.querySelector('#search');
 const submit = document.querySelector('.js-submit');
 const studentList = document.querySelector('.student-list');
 
-// searchNames function adds student objects that match the search value into an array. returns the searchResults array.
+// searchNames function adds student objects that match the search value into an array. returns the searchResults array. also gives no results found if no matches
 function searchNames(searchInput) {
+   const pageButtons = document.querySelectorAll('button');
+   pageButtons[0].className = 'active';
    let searchResults = [];
    for (let i = 0; i < data.length; i++) {
-    if(data[i].name.first.includes(searchInput.toLowerCase()) || data[i].name.last.includes(searchInput.toLowerCase())) {
+      // fullName help from A. Bennardo in Slack Community
+      const fullName = `${data[i].name.first.toLowerCase()}  ${data[i].name.last.toLowerCase()}`;
+      if(fullName.includes(searchInput.toLowerCase())) {
          searchResults.push(data[i]);
-      } 
+      }
    }
 
    if (searchResults.length === 0){
-      studentList.innerHTML = '';
          studentList.insertAdjacentHTML(
             'beforeend',
             `<span class="no-results">No results found.</span>`
          );
-      }
-   
+   }
    return searchResults;
 }
 
@@ -100,13 +102,11 @@ function addPagination(list) {
 
 // event listeners to show search results upon click of the search button or keyup in the search bar
 submit.addEventListener('click', () => {
-   console.log('click works');
    showPage(searchNames(search.value), 1);
    addPagination(searchNames(search.value));
 });
 
 search.addEventListener('keyup', () => {
-   console.log('keyup works');
    showPage(searchNames(search.value), 1);
    addPagination(searchNames(search.value));
 });
